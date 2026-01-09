@@ -267,15 +267,15 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-            {/* Main Card */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl h-[85vh] md:h-[600px] flex flex-col md:flex-row relative mx-4">
+            {/* Main Card - Flex Column on Mobile, Row on Desktop */}
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl h-[90vh] md:h-[600px] flex flex-col md:flex-row relative mx-4">
 
-                {/* Controls Header */}
+                {/* Controls Header - Sticky/Absolute */}
                 <div className="absolute top-4 right-4 z-50 flex items-center gap-3">
                     {/* Mute Button */}
                     <button
                         onClick={() => setIsMuted(!isMuted)}
-                        className="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full p-2 transition-all"
+                        className="bg-gray-100/80 hover:bg-gray-200 backdrop-blur-sm text-gray-600 rounded-full p-2 transition-all"
                         title={isMuted ? "Activar sonido" : "Silenciar"}
                     >
                         {isMuted ? (
@@ -293,20 +293,21 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                     {/* Return to Map Button */}
                     <button
                         onClick={handleCloseAttempt}
-                        className="bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center gap-2 border border-red-200 text-sm"
+                        className="bg-red-50/80 hover:bg-red-100/90 backdrop-blur-sm text-red-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center gap-2 border border-red-200 text-sm"
                     >
                         Volver al mapa
                     </button>
                 </div>
 
-                {/* Character Column */}
-                <div className="w-full md:w-1/3 bg-blue-100 flex flex-col items-center justify-end pt-4 md:pt-8 relative overflow-hidden shrink-0 h-1/3 md:h-auto">
+                {/* Character Section - Fixed height on mobile, width on desktop */}
+                <div className="w-full md:w-1/3 bg-blue-100 flex flex-col items-center justify-end md:pt-8 relative overflow-hidden shrink-0 h-48 md:h-auto border-b md:border-b-0 md:border-r border-blue-200">
                     {/* Decorative circle */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-200/50 rounded-full blur-xl"></div>
 
                     {/* WAN Specific Note - Speech Bubble */}
                     {step === 2 && level === 1 && (
-                        <div className="relative z-20 mb-4 mx-4 animate-in zoom-in slide-in-from-bottom-4 duration-500">
+                        <div className="relative z-20 mb-2 md:mb-4 mx-4 hidden md:block animate-in zoom-in slide-in-from-bottom-4 duration-500">
+                            {/* Only show speech bubble on desktop to save space on mobile */}
                             <div className="bg-white rounded-2xl p-5 shadow-lg border-2 border-blue-400 relative">
                                 <p className="text-sm text-gray-700 font-medium text-center leading-snug">
                                     <span className="block text-blue-600 font-bold mb-1">💡 Analogía:</span>
@@ -317,47 +318,20 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                         </div>
                     )}
 
-                    {/* Quiz Scenario Feedback */}
-                    {currentContent.type === 'quiz' && !showError && !showSuccess && (
-                        <div className="relative z-20 mb-4 mx-4 animate-in zoom-in slide-in-from-bottom-4 duration-500">
-                            <div className="bg-white rounded-2xl p-5 shadow-lg border-2 border-indigo-400 relative">
-                                <p className="text-sm text-gray-700 font-medium text-center leading-snug">
-                                    <span className="block text-indigo-600 font-bold mb-1">🤔 Escenario:</span>
-                                    "{currentContent.text}"
-                                </p>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-white border-b-2 border-r-2 border-indigo-400 transform rotate-45"></div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Error Feedback */}
-                    {showError && (
-                        <div className="relative z-20 mb-4 mx-4 animate-in zoom-in slide-in-from-bottom-4 duration-500">
-                            <div className="bg-red-50 rounded-2xl p-5 shadow-lg border-2 border-red-400 relative">
-                                <p className="text-sm text-gray-800 font-bold text-center leading-snug">
-                                    <span className="block text-red-600 text-lg mb-1">¡Error de capa 2!</span>
-                                    Recuerda: El Router y el Módem son para salir a Internet (WAN). Si te quedas dentro de la oficina (LAN), el jefe es el Switch. ¡Inténtalo de nuevo!
-                                </p>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-red-50 border-b-2 border-r-2 border-red-400 transform rotate-45"></div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Success Feedback */}
-                    {showSuccess && (
-                        <div className="relative z-20 mb-4 mx-4 animate-in zoom-in slide-in-from-bottom-4 duration-500">
-                            <div className="bg-green-50 rounded-2xl p-5 shadow-lg border-2 border-green-400 relative">
-                                <p className="text-sm text-gray-800 font-bold text-center leading-snug">
-                                    <span className="block text-green-600 text-lg mb-1">¡Exacto!</span>
-                                    Diste en el clavo. Como el tráfico es local (es decir, no sale a Internet), el Switch toma el control. Él usa la Dirección MAC para entregar el paquete directamente a la impresora sin molestar al Router. ¡Eficiencia pura!
-                                </p>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-green-50 border-b-2 border-r-2 border-green-400 transform rotate-45"></div>
-                            </div>
+                    {/* Feedback Messages - Positioned over Mac on mobile, separate on desktop */}
+                    {(showError || showSuccess || (currentContent.type === 'quiz' && !showError && !showSuccess)) && (
+                        <div className="absolute top-16 md:bottom-32 md:top-auto z-30 px-4 w-full md:block">
+                            {/* Conditionally rendered based on state */}
+                            {currentContent.type === 'quiz' && !showError && !showSuccess && (
+                                <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-lg border-2 border-indigo-400 text-xs text-center md:hidden mb-2">
+                                    <span className="font-bold text-indigo-600 block">🤔 Escenario</span>
+                                </div>
+                            )}
                         </div>
                     )}
 
                     {/* Mac Sprite */}
-                    <div className="relative z-10 w-40 h-40 md:w-64 md:h-64 flex items-end justify-center mb-[-10px] md:mb-[-20px] flex-shrink-0">
+                    <div className="relative z-10 w-32 h-32 md:w-64 md:h-64 flex items-end justify-center mb-0 md:mb-[-20px] flex-shrink-0">
                         <img
                             src={sprites[spriteIndex]}
                             alt="Mac explicando"
@@ -366,138 +340,136 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                     </div>
                 </div>
 
-                {/* Content Column */}
-                <div className="w-full md:w-2/3 p-4 md:p-12 pb-20 md:pb-24 flex flex-col relative h-2/3 md:h-auto bg-white">
-                    <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4 text-primary-600 shrink-0">
-                        {currentContent.title}
-                    </h2>
+                {/* Content Column - Fills remaining space */}
+                <div className="w-full md:w-2/3 flex flex-col relative h-full bg-white min-h-0">
 
-                    {/* Text/Content Area - Dynamic height with flex-1 */}
-                    <div className="bg-amber-50 rounded-xl p-4 md:p-6 border-l-4 border-amber-400 mb-0 flex-1 overflow-y-auto custom-scrollbar min-h-0">
-                        {/* Standard Text Content */}
-                        {(!currentContent.type || currentContent.type !== 'quiz') && (
-                            <div className="space-y-6 pb-4">
-                                {currentContent?.sections && Array.isArray(currentContent.sections) ? (
-                                    currentContent.sections.map((section, idx) => (
-                                        <div key={idx} className="flex flex-col gap-3 pb-4 border-b border-amber-200 last:border-0 last:pb-0">
-                                            <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">
-                                                {section.text}
-                                            </p>
-                                            {section.image && (
-                                                <div className="flex flex-col items-center mt-2">
-                                                    <div className="bg-white p-2 rounded-xl shadow-md border-2 border-gray-100 max-w-[280px]">
+                    {/* Header Title */}
+                    <div className="p-4 md:p-8 md:pb-4 shrink-0">
+                        <h2 className="text-xl md:text-3xl font-bold text-gray-800 text-primary-600 leading-tight">
+                            {currentContent.title}
+                        </h2>
+                    </div>
+
+                    {/* Scrollable Content Area */}
+                    <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-4 custom-scrollbar min-h-0">
+                        <div className="bg-amber-50 rounded-xl p-4 md:p-6 border-l-4 border-amber-400 h-full">
+                            {/* Standard Text Content */}
+                            {(!currentContent.type || currentContent.type !== 'quiz') && (
+                                <div className="space-y-4 md:space-y-6">
+                                    {currentContent?.sections && Array.isArray(currentContent.sections) ? (
+                                        currentContent.sections.map((section, idx) => (
+                                            <div key={idx} className="flex flex-col gap-3 pb-4 border-b border-amber-200 last:border-0 last:pb-0">
+                                                <p className="text-base md:text-lg text-gray-700 leading-relaxed whitespace-pre-line">
+                                                    {section.text}
+                                                </p>
+                                                {section.image && (
+                                                    <div className="flex flex-col items-center mt-2">
                                                         <img
                                                             src={section.image}
                                                             alt={`Diagrama ${idx}`}
-                                                            className="rounded-lg w-full h-auto object-contain"
+                                                            className="rounded-lg max-w-full h-auto max-h-48 object-contain bg-white p-2 shadow-sm"
                                                         />
+                                                        {section.caption && (
+                                                            <p className="text-red-600 font-bold mt-1 text-xs bg-red-50 px-2 py-1 rounded-full border border-red-200">
+                                                                {section.caption}
+                                                            </p>
+                                                        )}
                                                     </div>
-                                                    {section.caption && (
-                                                        <p className="text-red-600 font-bold mt-1 text-xs bg-red-50 px-3 py-1 rounded-full border border-red-200">
-                                                            {section.caption}
+                                                )}
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <p className="text-base md:text-lg text-gray-700 leading-relaxed whitespace-pre-line text-justify">
+                                                {currentContent.text}
+                                            </p>
+                                            {currentContent.image && (
+                                                <div className="flex flex-col items-center mt-4">
+                                                    <img
+                                                        src={currentContent.image}
+                                                        alt={currentContent.title}
+                                                        className="rounded-lg max-w-full h-auto max-h-48 object-contain bg-white p-2 shadow-sm"
+                                                    />
+                                                    {currentContent.imageCaption && (
+                                                        <p className="text-red-600 font-bold mt-2 text-sm bg-red-50 px-3 py-1 rounded-full border border-red-200 text-center">
+                                                            ⚠️ {currentContent.imageCaption}
                                                         </p>
                                                     )}
                                                 </div>
                                             )}
-                                        </div>
-                                    ))
-                                ) : (
-                                    <>
-                                        <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">
-                                            {currentContent.text}
-                                        </p>
-                                        {currentContent.image && (
-                                            <div className="flex flex-col items-center mt-4">
-                                                <div className="bg-white p-2 rounded-xl shadow-md border-2 border-gray-100 max-w-[300px]">
-                                                    <img
-                                                        src={currentContent.image}
-                                                        alt={currentContent.title}
-                                                        className="rounded-lg w-full h-auto object-contain"
-                                                    />
-                                                </div>
-                                                {currentContent.imageCaption && (
-                                                    <p className="text-red-600 font-bold mt-2 text-sm bg-red-50 px-3 py-1 rounded-full border border-red-200">
-                                                        ⚠️ {currentContent.imageCaption}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Quiz Content */}
-                        {currentContent.type === 'quiz' && (
-                            <div className="flex flex-col h-full">
-                                <p className="text-sm font-bold text-indigo-700 bg-indigo-100 p-2 rounded-lg mb-4">
-                                    PREGUNTA: {currentContent.question}
-                                </p>
-                                <div className="space-y-3 flex-grow overflow-y-auto">
-                                    {currentContent.options.map((opt) => (
-                                        <button
-                                            key={opt.id}
-                                            onClick={() => setSelectedOption(opt.id)}
-                                            className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${selectedOption === opt.id
-                                                ? 'border-indigo-600 bg-indigo-50 shadow-sm'
-                                                : 'border-gray-200 hover:border-indigo-300 hover:bg-white'
-                                                }`}
-                                        >
-                                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${selectedOption === opt.id ? 'border-indigo-600' : 'border-gray-300'}`}>
-                                                {selectedOption === opt.id && <div className="w-2.5 h-2.5 bg-indigo-600 rounded-full" />}
-                                            </div>
-                                            <span className="text-gray-700 font-medium text-sm">{opt.label}</span>
-                                        </button>
-                                    ))}
+                                        </>
+                                    )}
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            )}
 
-                    {/* Navigation Buttons - Absolute Bottom */}
-                    <div className="absolute bottom-6 left-0 w-full px-12 flex justify-between items-center">
-                        {/* Back Button */}
-                        <div className="flex-1">
-                            {step > 0 && (
-                                <button
-                                    onClick={handleBack}
-                                    className="text-gray-500 hover:text-blue-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center gap-2 hover:bg-gray-100"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 rotate-180" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
-                                    Anterior
-                                </button>
+                            {/* Quiz Content */}
+                            {currentContent.type === 'quiz' && (
+                                <div className="flex flex-col h-full gap-4">
+                                    <p className="text-sm font-bold text-indigo-700 bg-indigo-100 p-3 rounded-lg leading-snug">
+                                        PREGUNTA: {currentContent.question}
+                                    </p>
+                                    <div className="space-y-2 flex-grow">
+                                        {currentContent.options.map((opt) => (
+                                            <button
+                                                key={opt.id}
+                                                onClick={() => setSelectedOption(opt.id)}
+                                                className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center gap-3 ${selectedOption === opt.id
+                                                    ? 'border-indigo-600 bg-indigo-50 shadow-sm'
+                                                    : 'border-gray-200 hover:border-indigo-300 hover:bg-white'
+                                                    }`}
+                                            >
+                                                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${selectedOption === opt.id ? 'border-indigo-600' : 'border-gray-300'}`}>
+                                                    {selectedOption === opt.id && <div className="w-2.5 h-2.5 bg-indigo-600 rounded-full" />}
+                                                </div>
+                                                <span className="text-gray-700 font-medium text-sm">{opt.label}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* Feedback inline for mobile readability */}
+                                    {showError && (
+                                        <div className="bg-red-50 text-red-700 text-sm p-3 rounded-lg border border-red-200">
+                                            <strong>¡Error!</strong> Recuerda: LAN = Switch.
+                                        </div>
+                                    )}
+                                    {showSuccess && (
+                                        <div className="bg-green-50 text-green-700 text-sm p-3 rounded-lg border border-green-200">
+                                            <strong>¡Correcto!</strong> El Switch es el jefe local.
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </div>
+                    </div>
 
-                        {/* Next Button */}
-                        <div className="flex-1 flex justify-end">
+                    {/* Footer Buttons - Fixed to bottom of content column */}
+                    <div className="p-4 md:p-8 border-t border-gray-100 bg-gray-50 flex justify-between items-center shrink-0 rounded-br-3xl">
+                        {step > 0 ? (
                             <button
-                                onClick={handleNext}
-                                disabled={currentContent.type === 'quiz' && !selectedOption && !showSuccess}
-                                className={`font-bold py-3 px-8 rounded-xl shadow-lg transition-all flex items-center gap-2 ${currentContent.type === 'quiz' && !selectedOption && !showSuccess
-                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                                    : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl transform hover:-translate-y-0.5'
-                                    }`}
+                                onClick={handleBack}
+                                className="text-gray-500 hover:text-blue-600 font-bold py-2 px-4 rounded-xl transition-all flex items-center gap-2 hover:bg-gray-200/50"
                             >
-                                {showSuccess ? "Finalizar" : step < content.length - 1 ? "Siguiente" : "Confirmar"}
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 rotate-180" viewBox="0 0 20 20" fill="currentColor">
                                     <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                                 </svg>
+                                <span className="hidden md:inline">Anterior</span>
                             </button>
-                        </div>
-                    </div>
-                </div>
+                        ) : <div />}
 
-                {/* Progress Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-50">
-                    {content.map((_, i) => (
-                        <div
-                            key={i}
-                            className={`h-2 rounded-full transition-all duration-300 ${i === step ? 'w-8 bg-blue-600' : 'w-2 bg-gray-300'}`}
-                        />
-                    ))}
+                        <button
+                            onClick={handleNext}
+                            disabled={currentContent.type === 'quiz' && !selectedOption && !showSuccess}
+                            className={`font-bold py-3 px-6 md:px-8 rounded-xl shadow-lg transition-all flex items-center gap-2 ${currentContent.type === 'quiz' && !selectedOption && !showSuccess
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl transform hover:-translate-y-0.5'
+                                }`}
+                        >
+                            {showSuccess ? "Finalizar" : step < content.length - 1 ? "Siguiente" : "Confirmar"}
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 
