@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import LevelNode from './LevelNode';
 import MacCharacter from './MacCharacter';
 import LevelPopup from './LevelPopup';
@@ -22,6 +23,7 @@ import worldBg from '../../assets/world_bg.png'; // New background
 const LevelMap = () => {
     // Hardcoded user ID for demo purposes - In a real app this comes from auth context
     const USER_ID = 1;
+    const { logout } = useAuth();
 
     const [selectedLevel, setSelectedLevel] = useState(null);
     const [showVideo, setShowVideo] = useState(false);
@@ -228,6 +230,16 @@ const LevelMap = () => {
                 </div>
                 <button onClick={handleReset} className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600">
                     Reset
+                </button>
+            </div>
+
+            {/* Logout Button */}
+            <div className="absolute top-4 right-4 z-50">
+                <button
+                    onClick={logout}
+                    className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-full shadow-lg border border-gray-600 transition-all hover:scale-105 active:scale-95 text-sm"
+                >
+                    Cerrar Sesión
                 </button>
             </div>
 
