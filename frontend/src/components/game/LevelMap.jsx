@@ -21,9 +21,9 @@ import introVideo from '../../assets/intro_level1.mp4';
 import worldBg from '../../assets/world_bg.png'; // New background
 
 const LevelMap = () => {
-    // Hardcoded user ID for demo purposes - In a real app this comes from auth context
-    const USER_ID = 1;
-    const { logout } = useAuth();
+    // Get user from context
+    const { user, logout } = useAuth();
+    const USER_ID = user?.id;
 
     const [selectedLevel, setSelectedLevel] = useState(null);
     const [showVideo, setShowVideo] = useState(false);
@@ -71,9 +71,10 @@ const LevelMap = () => {
     useEffect(() => {
         const fetchProgress = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/progress/${USER_ID}`);
-                if (response.ok) {
-                    const data = await response.json();
+                if (!USER_ID) return;
+                const response = await api.get(`/progress/${USER_ID}`);
+                if (response.status === 200) {
+                    const data = response.data;
                     setDiamonds(data.puntos_totales);
 
                     // Update level locks based on nivel_actual
@@ -98,11 +99,8 @@ const LevelMap = () => {
     const handleReset = async () => {
         if (!confirm("¿Reiniciar progreso a 0?")) return;
         try {
-            await fetch('http://localhost:3001/api/progress/reset', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: USER_ID })
-            });
+            await api.post('/progress/reset', { userId: USER_ID });
+            window.location.reload();
             window.location.reload();
         } catch (e) { console.error(e); }
     };
@@ -175,18 +173,15 @@ const LevelMap = () => {
             const currentLvl = showExplanation ? explanationLevel : (showProtocolGame ? 3 : 1);
 
             console.log("Saving progress to DB...", { userId: USER_ID, levelId: currentLvl, diamonds: earnedDiamonds });
-            const response = await fetch('http://localhost:3001/api/progress/complete', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    userId: USER_ID,
-                    levelId: currentLvl,
-                    diamonds: earnedDiamonds
-                })
+            console.log("Saving progress to DB...", { userId: USER_ID, levelId: currentLvl, diamonds: earnedDiamonds });
+            const response = await api.post('/progress/complete', {
+                userId: USER_ID,
+                levelId: currentLvl,
+                diamonds: earnedDiamonds
             });
 
-            if (response.ok) {
-                const data = await response.json();
+            if (response.status === 200) {
+                const data = response.data;
                 console.log("Progress saved:", data);
 
                 // Only update diamonds if points were actually added
