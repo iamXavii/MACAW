@@ -268,7 +268,7 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
             {/* Main Card */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl h-[90vh] md:h-[600px] flex flex-col md:flex-row relative mx-4">
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl h-[85vh] md:h-[600px] flex flex-col md:flex-row relative mx-4">
 
                 {/* Controls Header */}
                 <div className="absolute top-4 right-4 z-50 flex items-center gap-3">
@@ -300,7 +300,7 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                 </div>
 
                 {/* Character Column */}
-                <div className="w-full md:w-1/3 bg-blue-100 flex flex-col items-center justify-end pt-8 relative overflow-hidden">
+                <div className="w-full md:w-1/3 bg-blue-100 flex flex-col items-center justify-end pt-4 md:pt-8 relative overflow-hidden shrink-0 h-1/3 md:h-auto">
                     {/* Decorative circle */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-200/50 rounded-full blur-xl"></div>
 
@@ -357,7 +357,7 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                     )}
 
                     {/* Mac Sprite */}
-                    <div className="relative z-10 w-64 h-64 flex items-end justify-center mb-[-10px] md:mb-[-20px] flex-shrink-0">
+                    <div className="relative z-10 w-40 h-40 md:w-64 md:h-64 flex items-end justify-center mb-[-10px] md:mb-[-20px] flex-shrink-0">
                         <img
                             src={sprites[spriteIndex]}
                             alt="Mac explicando"
@@ -367,13 +367,13 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                 </div>
 
                 {/* Content Column */}
-                <div className="w-full md:w-2/3 p-8 md:p-12 pb-24 flex flex-col relative">
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-primary-600 h-10">
+                <div className="w-full md:w-2/3 p-4 md:p-12 pb-20 md:pb-24 flex flex-col relative h-2/3 md:h-auto bg-white">
+                    <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2 md:mb-4 text-primary-600 shrink-0">
                         {currentContent.title}
                     </h2>
 
-                    {/* Text/Content Area - Adjusted height to leave room for bottom buttons */}
-                    <div className="bg-amber-50 rounded-xl p-6 border-l-4 border-amber-400 mb-0 h-[400px] overflow-y-auto custom-scrollbar">
+                    {/* Text/Content Area - Dynamic height with flex-1 */}
+                    <div className="bg-amber-50 rounded-xl p-4 md:p-6 border-l-4 border-amber-400 mb-0 flex-1 overflow-y-auto custom-scrollbar min-h-0">
                         {/* Standard Text Content */}
                         {(!currentContent.type || currentContent.type !== 'quiz') && (
                             <div className="space-y-6 pb-4">
