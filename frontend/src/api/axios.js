@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3001/api',
+    baseURL: 'https://macaw-ffwc.vercel.app/api',
 });
 
 // Interceptor para agregar el token a las peticiones
