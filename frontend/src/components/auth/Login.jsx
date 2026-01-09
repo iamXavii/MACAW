@@ -44,6 +44,7 @@ const Login = () => {
                             <p className="text-sm text-red-700">{error}</p>
                         </div>
                     )}
+                    {console.error(error)}
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <input
