@@ -107,7 +107,7 @@ const LevelMap = () => {
         };
 
         fetchProgress();
-    }, []);
+    }, [USER_ID]);
 
     const handleReset = async () => {
         if (!confirm("¿Reiniciar progreso a 0?")) return;
@@ -216,6 +216,7 @@ const LevelMap = () => {
             }
         } catch (error) {
             console.error("Failed to save progress:", error);
+            alert("Error guardando progreso: " + (error.response?.data?.message || error.message));
         }
     };
 
