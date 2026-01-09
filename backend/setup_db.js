@@ -1,11 +1,15 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const mysql = require('mysql2/promise');
 
 const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
-    multipleStatements: true
+    database: process.env.DB_NAME || 'redes_db',
+    port: process.env.DB_PORT || 3306,
+    multipleStatements: true,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined
 };
 
 const DB_NAME = process.env.DB_NAME || 'redes_db';
@@ -13,7 +17,7 @@ const DB_NAME = process.env.DB_NAME || 'redes_db';
 async function setup() {
     let connection;
     try {
-        console.log('⏳ Conectando a MySQL...');
+        console.log(`⏳ Conectando a MySQL en: ${dbConfig.host}...`);
         connection = await mysql.createConnection(dbConfig);
         console.log('✅ Conexión establecida.');
 
