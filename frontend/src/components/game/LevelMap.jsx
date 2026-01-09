@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import api from '../../api/axios';
 import LevelNode from './LevelNode';
 import MacCharacter from './MacCharacter';
 import LevelPopup from './LevelPopup';

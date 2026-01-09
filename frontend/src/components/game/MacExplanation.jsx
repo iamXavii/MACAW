@@ -268,7 +268,7 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
             {/* Main Card */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-[900px] h-[600px] flex flex-col md:flex-row relative">
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl h-[90vh] md:h-[600px] flex flex-col md:flex-row relative mx-4">
 
                 {/* Controls Header */}
                 <div className="absolute top-4 right-4 z-50 flex items-center gap-3">
