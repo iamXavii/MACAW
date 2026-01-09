@@ -67,6 +67,19 @@ const LevelMap = () => {
     // Track Mac's position separate from level status
     const [macPosition, setMacPosition] = useState(1);
 
+    // Responsive path offset
+    const [pathScale, setPathScale] = useState(1);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setPathScale(window.innerWidth < 640 ? 0.5 : 1); // Less curve on mobile
+        };
+
+        handleResize(); // Init
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     // Fetch User Progress on Mount
     useEffect(() => {
         const fetchProgress = async () => {
@@ -268,7 +281,7 @@ const LevelMap = () => {
                 {levels.map((level, index) => {
                     // Calculate offset for winding path
                     // Standard sine wave pattern for vertical scrolling path
-                    const offset = Math.sin(index * 0.8) * 60;
+                    const offset = Math.sin(index * 0.8) * 60 * pathScale;
                     const isSelected = selectedLevel === level.id;
 
                     return (
