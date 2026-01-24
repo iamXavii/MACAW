@@ -253,7 +253,8 @@ const LevelMap = () => {
         // Save to Database
         try {
             // Logic to determine which level is completed based on current active game/expl
-            const currentLvl = showExplanation ? explanationLevel : (showProtocolGame ? 3 : 1);
+            // Usage of macPosition is safer as it tracks the level we clicked to enter
+            const currentLvl = macPosition;
 
             console.log("Saving progress to DB...", { userId: USER_ID, levelId: currentLvl, diamonds: earnedDiamonds });
             console.log("Saving progress to DB...", { userId: USER_ID, levelId: currentLvl, diamonds: earnedDiamonds });
