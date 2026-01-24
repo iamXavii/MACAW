@@ -24,7 +24,11 @@ router.post('/complete', async (req, res) => {
         let newPoints = currentUser.puntos_totales;
 
         // Check if level is already completed
+        console.log(`[DEBUG] Backend: User Level=${currentUser.nivel_actual}, Completed Level=${levelId}`);
+        console.log(`[DEBUG] Comparison: ${levelId} (Type: ${typeof levelId}) === ${currentUser.nivel_actual} (Type: ${typeof currentUser.nivel_actual})`);
+
         if (levelId < currentUser.nivel_actual) {
+            console.log('[DEBUG] Level already completed.');
             // Return current state without update
             return res.json({
                 message: 'Nivel ya completado anteriormente',
@@ -35,7 +39,9 @@ router.post('/complete', async (req, res) => {
         }
 
         // Only advance level if completing the current max level
-        if (levelId === currentUser.nivel_actual) {
+        // Ensure type coercion is safe or handled
+        if (parseInt(levelId) === currentUser.nivel_actual) {
+            console.log('[DEBUG] Advancing to next level!');
             newLevel = currentUser.nivel_actual + 1;
             newPoints = currentUser.puntos_totales + diamonds;
             pointsAdded = diamonds;
@@ -44,6 +50,8 @@ router.post('/complete', async (req, res) => {
                 'UPDATE usuarios SET nivel_actual = ?, puntos_totales = ? WHERE id = ?',
                 [newLevel, newPoints, userId]
             );
+        } else {
+            console.log('[DEBUG] Level mismatch. Not advancing.');
         }
 
         res.json({
