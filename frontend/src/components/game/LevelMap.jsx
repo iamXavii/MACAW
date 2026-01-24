@@ -8,6 +8,8 @@ import VideoPlayer from './VideoPlayer';
 import MacExplanation from './MacExplanation';
 
 import Level1Quiz from './Level1Quiz';
+import GenericQuiz from './GenericQuiz';
+import MatchingGame from './MatchingGame';
 
 // Import custom level icons
 import level1Icon from '../../assets/level_1.png';
@@ -32,6 +34,12 @@ const LevelMap = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [explanationLevel, setExplanationLevel] = useState(1); // Track which level explanation to show
     const [showProtocolGame, setShowProtocolGame] = useState(false); // Level 3 Game
+    const [showGenericQuiz, setShowGenericQuiz] = useState(false);
+    const [showMatchingGame, setShowMatchingGame] = useState(false);
+
+    const [quizProps, setQuizProps] = useState(null);
+    const [matchingProps, setMatchingProps] = useState(null);
+
     const [showQuiz, setShowQuiz] = useState(false);
 
     const [diamonds, setDiamonds] = useState(0);
@@ -44,25 +52,38 @@ const LevelMap = () => {
         4: level4Icon
     };
 
-    // Level Metadata
+    // Level Metadata (16 Levels)
     const levelData = {
-        1: {
-            section: "Los Cimientos de la Red",
-            title: "Conceptos Básicos",
-            color: "bg-cyan-500" // Matches the blue/cyan style of the icon
-        },
-        // Level 2 and 3 Swapped as per request
-        2: { section: "Los Cimientos de la Red", title: "Topologías", color: "bg-cyan-500" },
-        3: { section: "Los Cimientos de la Red", title: "Protocolos", color: "bg-cyan-500" },
-        4: { section: "Los Cimientos de la Red", title: "Hardware", color: "bg-cyan-500" }
+        // Module 1: Fundamentos
+        1: { section: "Módulo 1: Fundamentos", title: "Conceptos Básicos", color: "bg-blue-500" },
+        2: { section: "Módulo 1: Fundamentos", title: "Modelo OSI", color: "bg-blue-500" },
+        3: { section: "Módulo 1: Fundamentos", title: "Dispositivos", color: "bg-blue-500" },
+        4: { section: "Módulo 1: Fundamentos", title: "Topologías", color: "bg-blue-500" },
+
+        // Module 2: Protocolos
+        5: { section: "Módulo 2: Protocolos", title: "Capa Aplicación", color: "bg-indigo-500" },
+        6: { section: "Módulo 2: Protocolos", title: "Transporte (TCP/UDP)", color: "bg-indigo-500" },
+        7: { section: "Módulo 2: Protocolos", title: "Capa de Red", color: "bg-indigo-500" },
+        8: { section: "Módulo 2: Protocolos", title: "Enrutamiento", color: "bg-indigo-500" },
+
+        // Module 3: Seguridad
+        9: { section: "Módulo 3: Seguridad", title: "Amenazas", color: "bg-red-500" },
+        10: { section: "Módulo 3: Seguridad", title: "Wifi Seguro", color: "bg-red-500" },
+        11: { section: "Módulo 3: Seguridad", title: "Defensa (Firewall)", color: "bg-red-500" },
+        12: { section: "Módulo 3: Seguridad", title: "Vulnerabilidades", color: "bg-red-500" },
+
+        // Module 4: Evaluación
+        13: { section: "Módulo 4: Evaluación", title: "Quiz Maestro", color: "bg-yellow-500" },
+        14: { section: "Módulo 4: Evaluación", title: "Misiones", color: "bg-yellow-500" },
+        15: { section: "Módulo 4: Evaluación", title: "Desafío Final", color: "bg-yellow-500" },
+        16: { section: "Módulo 4: Evaluación", title: "Graduación", color: "bg-yellow-500" }
     };
 
-    // Mock data for levels
-    // State for levels to allow updates (Mock data became state)
-    const [levels, setLevels] = useState(Array.from({ length: 4 }, (_, i) => ({
+    // State for levels (16 levels)
+    const [levels, setLevels] = useState(Array.from({ length: 16 }, (_, i) => ({
         id: i + 1,
-        status: i === 0 ? 'active' : 'locked', // Only first one active initially
-        x: Math.sin(i) * 50 // Winding path logic
+        status: i === 0 ? 'active' : 'locked',
+        x: Math.sin(i) * 50 // Generic winding path
     })));
 
     // Track Mac's position separate from level status
@@ -136,37 +157,79 @@ const LevelMap = () => {
     };
 
     const handleStartLevel = () => {
-        // Prepare explanation
-        setExplanationLevel(selectedLevel);
-
-        // If it's Level 1, show video first
-        if (selectedLevel === 1) {
-            setShowVideo(true);
-            setSelectedLevel(null); // Close the popup
-        } else {
-            proceedToLevel();
-        }
-    };
-
-    const proceedToLevel = () => {
-        // If the level has an explanation (Level 1 and now Level 2), show it
-        // Otherwise just alert or do legacy behavior
-        if (selectedLevel === 1 || selectedLevel === 2) {
-            console.log("Showing explanation for level", selectedLevel);
-            // Logic moved to handleVideoComplete for Lv1, but directly here for Lv2
-            if (selectedLevel === 2) setShowExplanation(true);
-        } else if (selectedLevel === 3) {
-            setShowProtocolGame(true);
-        } else {
-            alert("¡Iniciando lección!");
-        }
-
+        const lvlId = selectedLevel;
         setSelectedLevel(null); // Close popup
+
+        // Level Directing Logic
+        if (lvlId === 1) {
+            setShowVideo(true);
+        }
+        else if (lvlId === 2 || lvlId === 4) {
+            setExplanationLevel(lvlId);
+            setShowExplanation(true);
+        }
+        else if (lvlId === 3) {
+            setMatchingProps({
+                title: "Conecta los Dispositivos",
+                pairs: [
+                    { id: '1', left: 'Router', right: 'Enruta paquetes entre redes' },
+                    { id: '2', left: 'Switch', right: 'Conecta dispositivos en LAN' },
+                    { id: '3', left: 'Firewall', right: 'Filtra tráfico por seguridad' },
+                    { id: '4', left: 'Access Point', right: 'Provee conexión WiFi' }
+                ]
+            });
+            setShowMatchingGame(true);
+        }
+        else if (lvlId === 5) {
+            setQuizProps({
+                title: "Protocolos de Aplicación",
+                questions: [
+                    { question: "El protocolo _____ se usa para ver páginas web.", options: ["HTTP", "FTP", "SMTP", "DNS"], correctAnswer: 0 },
+                    { question: "Para enviar correos electrónicos usamos:", options: ["POP3", "SMTP", "IMAP", "SNMP"], correctAnswer: 1 },
+                    { question: "¿Qué protocolo transfiere archivos?", options: ["HTTP", "FTP", "SSH", "TELNET"], correctAnswer: 1 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+        else if (lvlId === 6) {
+            setShowProtocolGame(true);
+        }
+        else if (lvlId === 7) {
+            setMatchingProps({
+                title: "Clasificación de Protocolos",
+                pairs: [
+                    { id: '1', left: 'IP', right: 'Direccionamiento Lógico' },
+                    { id: '2', left: 'ICMP', right: 'Mensajes de Control/Error' },
+                    { id: '3', left: 'ARP', right: 'Resuelve MAC desde IP' }
+                ]
+            });
+            setShowMatchingGame(true);
+        }
+        else if (lvlId === 8) {
+            setQuizProps({
+                title: "Enrutamiento Dinámico",
+                questions: [
+                    { question: "¿Qué protocolo busca la ruta más corta por saltos?", options: ["OSPF", "RIP", "BGP", "EIGRP"], correctAnswer: 1 },
+                    { question: "Protocolo usado en el backbone de Internet:", options: ["OSPF", "RIP", "BGP", "ISIS"], correctAnswer: 2 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+        else {
+            // Default generic quiz for upper levels
+            setQuizProps({
+                title: `Evaluación Nivel ${lvlId}`,
+                questions: [
+                    { question: "¿Estás listo para avanzar al siguiente nivel?", options: ["Sí, estoy listo", "Necesito repasar"], correctAnswer: 0 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
     };
 
     const handleVideoComplete = () => {
         setShowVideo(false);
-        // Show explanation after video for Level 1
+        setExplanationLevel(1);
         setShowExplanation(true);
     };
 
@@ -178,6 +241,12 @@ const LevelMap = () => {
     const handleProtocolGameComplete = async () => {
         setShowProtocolGame(false);
         await saveProgress(10);
+    };
+
+    const handleGameComplete = async (score) => {
+        setShowGenericQuiz(false);
+        setShowMatchingGame(false);
+        await saveProgress(score || 10);
     };
 
     const saveProgress = async (earnedDiamonds) => {
@@ -276,6 +345,25 @@ const LevelMap = () => {
                 <ProtocolSorter
                     onComplete={handleProtocolGameComplete}
                     onClose={() => setShowProtocolGame(false)}
+                />
+            )}
+
+            {showGenericQuiz && quizProps && (
+                <GenericQuiz
+                    levelId={macPosition}
+                    title={quizProps.title}
+                    questions={quizProps.questions}
+                    onComplete={(score) => handleGameComplete(score)}
+                    onClose={() => setShowGenericQuiz(false)}
+                />
+            )}
+
+            {showMatchingGame && matchingProps && (
+                <MatchingGame
+                    title={matchingProps.title}
+                    pairs={matchingProps.pairs}
+                    onComplete={(score) => handleGameComplete(score)}
+                    onClose={() => setShowMatchingGame(false)}
                 />
             )}
 

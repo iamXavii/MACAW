@@ -106,29 +106,31 @@ async function setup() {
         `);
 
         // Insertar Lecciones
+        // Estructura: [modulo_id, titulo, contenido, dinamica_sugerida, orden]
         const leccionesValues = [
-            // Módulo 1
+            // Módulo 1: Fundamentos de redes
             [1, 'Conceptos básicos de redes', 'Definición, tipos y clasificación', 'Quiz', 1],
             [1, 'Modelo OSI y modelo TCP/IP', 'Capas, funciones y comparaciones', 'Arrastrar y soltar capas', 2],
-            [1, 'Topologías de red', 'Estrella, bus, anillo, malla, híbrida', 'Construcción de topología', 3],
-            [1, 'Dispositivos de red', 'Routers, switches, firewalls, APs', 'Juego de emparejar', 4],
+            [1, 'Dispositivos de red', 'Routers, switches, firewalls, access points', 'Emparejar dispositivos', 3],
+            [1, 'Topologías de red', 'Estrella, bus, anillo, malla, híbrida', 'Construcción de topología', 4],
 
-            // Módulo 2
+            // Módulo 2: Protocolos de comunicación
             [2, 'Protocolos de capa de aplicación', 'HTTP/HTTPS, FTP, SMTP, DNS', 'Completar frases', 1],
-            [2, 'Protocolos de capa de transporte', 'TCP y UDP', 'Simulación de tráfico', 2],
-            [2, 'Protocolos de capa de red', 'IP, ICMP, ARP', 'Clasificación de protocolos', 3],
-            [2, 'Protocolos de enrutamiento', 'RIP, OSPF, BGP', 'Reto de identificación', 4],
-            [2, 'Protocolos de seguridad', 'SSL/TLS, IPSec, VPN', 'Quiz', 5],
+            [2, 'Protocolos de transporte', 'TCP y UDP', 'Simulación de tráfico', 2],
+            [2, 'Protocolos de red y clasificación', 'IP, ICMP, ARP (Capas)', 'Clasificación de protocolos', 3],
+            [2, 'Protocolos de enrutamiento', 'RIP, OSPF, BGP', 'Reto de tiempo limitado', 4],
 
-            // Módulo 3
-            [3, 'Conceptos de vulnerabilidades', 'Amenazas en redes', 'Juego de detección', 1],
-            [3, 'Tipos de ataques comunes', 'Sniffing, spoofing, DoS/DDoS, phishing', 'Identificar ataques', 2],
-            [3, 'Seguridad en redes inalámbricas', 'WEP, WPA, WPA2, WPA3', 'Escenario interactivo WiFi', 3],
-            [3, 'Firewalls y IDS/IPS', 'Sistemas de detección y prevención', 'Configuración de firewall', 4],
-            [3, 'Buenas prácticas de seguridad', 'Políticas de acceso', 'Casos prácticos', 5],
+            // Módulo 3: Seguridad en redes
+            [3, 'Detección de amenazas', 'Sniffing, spoofing, DoS/DDoS, phishing', 'Juego de detección', 1],
+            [3, 'Seguridad inalámbrica', 'WEP, WPA, WPA2, WPA3', 'Escenario WiFi interactivo', 2],
+            [3, 'Medidas de seguridad', 'Firewalls y detección de intrusos', 'Casos prácticos', 3],
+            [3, 'Análisis de vulnerabilidades', 'Esquema de ataques y mitigación', 'Rompecabezas de vulnerabilidades', 4],
 
-            // Módulo 4
-            [4, 'Evaluación Final', 'Cuestionarios dinámicos y misiones', 'Ranking y Misiones', 1]
+            // Módulo 4: Evaluación gamificada
+            [4, 'Cuestionario Maestro', 'Evaluación rápida y precisa', 'Cuestionarios dinámicos', 1],
+            [4, 'Misiones Temáticas', 'Retos de experto y defensor', 'Misiones temáticas', 2],
+            [4, 'Desafío Final', 'Aplicación de todo lo aprendido', 'Caso integrador', 3],
+            [4, 'Graduación', 'Ceremonia de medallas y ranking', 'Ranking y celebración', 4]
         ];
 
         for (const leccion of leccionesValues) {
@@ -144,7 +146,7 @@ async function setup() {
             ('Novato de Redes', 'Completa el Módulo 1', 100, 'badge_novato.png'),
             ('Experto en Protocolos', 'Domina los protocolos del Módulo 2', 300, 'badge_experto.png'),
             ('Defensor de la Red', 'Completa el módulo de Seguridad', 600, 'badge_defensor.png'),
-            ('Master de Redes', 'Completa todo el curso con excelencia', 1000, 'badge_master.png');
+            ('Maestro de la Red', 'Completa todo el curso con excelencia', 1000, 'badge_master.png');
         `);
 
         console.log('✅ Base de datos actualizada con ÉXITO.');
