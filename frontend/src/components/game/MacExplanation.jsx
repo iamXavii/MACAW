@@ -78,6 +78,18 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
         ],
         2: [
             {
+                title: "Modelo OSI vs TCP/IP",
+                text: "Para que las computadoras se entiendan, usan un lenguaje común. El modelo OSI es la guía teórica de 7 capas, pero TCP/IP es el 'obrero' real de 4 capas que hace funcionar Internet.\n\nImagina que envías una carta: OSI describe todo el proceso legal, y TCP/IP es el camión de correo que realmente la lleva.",
+            },
+            {
+                title: "Capas Principales",
+                text: "1. Aplicación: Donde tú interactúas (Navegador).\n2. Transporte: Asegura que los datos lleguen (TCP).\n3. Red: Encuentra el camino (IP).\n4. Enlace/Física: Los cables y señales reales.",
+                type: 'celebration'
+            }
+        ],
+        // Level 4 replaces old Level 2 logic for Topologies discussion
+        4: [
+            {
                 title: "Topologías de Red",
                 text: "¡Atención, ingenieros! No basta con tener los equipos; la magia está en cómo los conectamos. A esto lo llamamos Topología.\n\n-- Topología de Bus --\nEs la abuelita de las redes. Un único cable central (Backbone) conecta a todos. Si falla el cable, falla toda la red.",
                 image: busTopologyImg,
@@ -87,12 +99,12 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                 title: "Topologías Avanzadas",
                 sections: [
                     {
-                        text: "-- Topología de Anillo --\nPara arreglar el caos, inventamos la Topología de Anillo. Aquí todo es disciplina. Los equipos forman un círculo cerrado y los datos viajan en una sola dirección usando un Token. Solo el que tiene el token puede hablar. Es organizada, pero si se corta el anillo, adiós red.",
+                        text: "-- Topología de Anillo --\nPara arreglar el caos, inventamos la Topología de Anillo. Aquí todo es disciplina. Los equipos forman un círculo cerrado y los datos viajan en una sola dirección usando un Token. Solo el que tiene el token puede hablar.",
                         image: ringTopologyImg,
                         caption: "Anillo: El token pone orden"
                     },
                     {
-                        text: "-- Topología de Estrella --\n¡La reina indiscutible! Todos los nodos se conectan a un switch central. Si un cable falla, solo se desconecta esa PC. Su debilidad es el centro: si el Switch muere, morimos todos. ¡Pero vale la pena!",
+                        text: "-- Topología de Estrella --\n¡La reina indiscutible! Todos los nodos se conectan a un switch central. Si un cable falla, solo se desconecta esa PC. ¡Es la más usada hoy en día!",
                         image: starTopologyImg,
                         caption: "Estrella: El Switch es el rey"
                     }
@@ -103,13 +115,13 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
                 sections: [
                     {
                         title: "El Tanque de Guerra: Malla",
-                        text: "Ahora, ¿qué pasa si el fallo NO es una opción? Sacamos el tanque de guerra: La Topología de Malla. Aquí conectamos todo con todo (o casi todo). Ofrece redundancia total: si un enlace falla, el tráfico automáticamente toma otro camino.\n\nEs prácticamente indestructible, es lo que usamos en Internet. ¿El problema? Es carísima y un dolor de cabeza llenarlo todo de cables.",
+                        text: "La Topología de Malla conecta todo con todo. Ofrece redundancia total: si un enlace falla, el tráfico toma otro camino. Es lo que usamos en Internet.",
                         image: meshTopologyImg,
                         caption: "Malla: Indestructible"
                     },
                     {
                         title: "Topología de Árbol",
-                        text: "Finalmente, si la red es gigante, usamos la Topología de Árbol. Piénsalo como un organigrama. Tienes un Switch 'Jefe' arriba, que conecta a Switches 'Gerentes' en cascada, y estos a las computadoras. Es excelente para organizar redes grandes.",
+                        text: "Topología de Árbol: Un Switch 'Jefe' conecta a Switches 'Gerentes'. Excelente para organizar redes grandes en edificios.",
                         image: treeTopologyImg,
                         caption: "Árbol: Jerárquico"
                     }
@@ -117,7 +129,35 @@ const MacExplanation = ({ onComplete, onClose, level = 1 }) => {
             },
             {
                 title: "Resumen de Ingeniero",
-                text: "Ahí lo tienes: Bus, Anillo, Estrella, Malla y Árbol. Como ingeniero, tu misión es elegir la correcta según el presupuesto y la seguridad que necesites. Repasa los diagramas, ¡porque esto va para el examen! Nos vemos en el siguiente nodo.",
+                text: "Tu misión es elegir la correcta según el presupuesto y la seguridad que necesites. ¡Nos vemos en el siguiente nodo!",
+                type: 'celebration'
+            }
+        ],
+        // Level 9: Security Threats
+        9: [
+            {
+                title: "El Lado Oscuro de la Red",
+                text: "Internet es increíble, pero también es peligroso. Bienvenido al módulo de Seguridad. Aquí aprenderás a defender tu red de las amenazas que acechan en la oscuridad digital."
+            },
+            {
+                title: "Malware: El Enemigo Silencioso",
+                text: "El Malware (Software Malicioso) viene en muchas formas:\n\n🦠 Virus: Se pega a un archivo y se propaga cuando lo abres.\n🪱 Gusano (Worm): Se replica solo y viaja por la red sin ayuda.\n🐴 Troyano: Se disfraza de programa útil para engañarte."
+            },
+            {
+                title: "Ataques Directos",
+                text: "No solo es software; hay hackers activos.\n\n🎣 Phishing: Te engañan con emails falsos para robar tus claves.\n🛑 DoS (Denegación de Servicio): Inundan un servidor con tráfico basura hasta que colapsa.\n👀 Sniffing: Espían tus datos mientras viajan por el cable.",
+                type: 'celebration'
+            }
+        ],
+        // Level 16: Graduation
+        16: [
+            {
+                title: "¡Misión Cumplida!",
+                text: "¡Has llegado al final del camino, cadete! Has dominado las topologías, desenredado los protocolos y defendido la red contra amenazas inminentes."
+            },
+            {
+                title: "Tu Nuevo Rango",
+                text: "Por la autoridad conferida por el protocolo TCP/IP, te nombro oficialmente: MAESTRO DE LA RED.\n\nYa no eres un simple usuario; eres un guardián de la conectividad.",
                 type: 'celebration'
             }
         ]

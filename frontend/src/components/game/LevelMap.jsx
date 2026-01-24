@@ -161,11 +161,12 @@ const LevelMap = () => {
         setSelectedLevel(null); // Close popup
 
         // Level Directing Logic
+        // Module 1: Fundamentos
         if (lvlId === 1) {
-            setShowVideo(true);
+            setShowVideo(true); // Video -> Explanation 1
         }
-        else if (lvlId === 2 || lvlId === 4) {
-            setExplanationLevel(lvlId);
+        else if (lvlId === 2) {
+            setExplanationLevel(2); // OSI Model Explanation
             setShowExplanation(true);
         }
         else if (lvlId === 3) {
@@ -174,56 +175,136 @@ const LevelMap = () => {
                 pairs: [
                     { id: '1', left: 'Router', right: 'Enruta paquetes entre redes' },
                     { id: '2', left: 'Switch', right: 'Conecta dispositivos en LAN' },
-                    { id: '3', left: 'Firewall', right: 'Filtra tráfico por seguridad' },
-                    { id: '4', left: 'Access Point', right: 'Provee conexión WiFi' }
+                    { id: '3', left: 'Firewall', right: 'Protege contra intrusos' },
+                    { id: '4', left: 'Modem', right: 'Modula señal analógica/digital' }
                 ]
             });
             setShowMatchingGame(true);
         }
+        else if (lvlId === 4) {
+            setExplanationLevel(4); // Topologies Explanation
+            setShowExplanation(true);
+        }
+
+        // Module 2: Protocolos
         else if (lvlId === 5) {
             setQuizProps({
-                title: "Protocolos de Aplicación",
+                title: "Capa de Aplicación",
                 questions: [
-                    { question: "El protocolo _____ se usa para ver páginas web.", options: ["HTTP", "FTP", "SMTP", "DNS"], correctAnswer: 0 },
-                    { question: "Para enviar correos electrónicos usamos:", options: ["POP3", "SMTP", "IMAP", "SNMP"], correctAnswer: 1 },
-                    { question: "¿Qué protocolo transfiere archivos?", options: ["HTTP", "FTP", "SSH", "TELNET"], correctAnswer: 1 }
+                    { question: "¿Qué protocolo usas para navegar en la web de forma segura?", options: ["HTTP", "HTTPS", "FTP", "DNS"], correctAnswer: 1 },
+                    { question: "Traduce nombres de dominio (como google.com) a direcciones IP:", options: ["DHCP", "DNS", "ARP", "TCP"], correctAnswer: 1 },
+                    { question: "Protocolo estándar para enviar correos electrónicos:", options: ["POP3", "IMAP", "SMTP", "HTTP"], correctAnswer: 2 }
                 ]
             });
             setShowGenericQuiz(true);
         }
         else if (lvlId === 6) {
-            setShowProtocolGame(true);
+            setShowProtocolGame(true); // Transport Layer Simulation
         }
         else if (lvlId === 7) {
             setMatchingProps({
-                title: "Clasificación de Protocolos",
+                title: "Protocolos de Red",
                 pairs: [
-                    { id: '1', left: 'IP', right: 'Direccionamiento Lógico' },
-                    { id: '2', left: 'ICMP', right: 'Mensajes de Control/Error' },
-                    { id: '3', left: 'ARP', right: 'Resuelve MAC desde IP' }
+                    { id: '1', left: 'IP', right: 'Direccionamiento lógico global' },
+                    { id: '2', left: 'ICMP', right: 'Reporte de errores (Ping)' },
+                    { id: '3', left: 'ARP', right: 'Encuentra MAC usando IP' },
+                    { id: '4', left: 'NAT', right: 'Traduce IPs privadas a públicas' }
                 ]
             });
             setShowMatchingGame(true);
         }
         else if (lvlId === 8) {
             setQuizProps({
-                title: "Enrutamiento Dinámico",
+                title: "Enrutamiento",
                 questions: [
-                    { question: "¿Qué protocolo busca la ruta más corta por saltos?", options: ["OSPF", "RIP", "BGP", "EIGRP"], correctAnswer: 1 },
-                    { question: "Protocolo usado en el backbone de Internet:", options: ["OSPF", "RIP", "BGP", "ISIS"], correctAnswer: 2 }
+                    { question: "¿Qué significa que una ruta sea 'Estática'?", options: ["Se aprende automáticamente", "El administrador la configura manualmente", "Cambia según el tráfico", "Es aleatoria"], correctAnswer: 1 },
+                    { question: "Protocolo de enrutamiento usado en el núcleo de Internet (Backbone):", options: ["OSPF", "RIP", "BGP", "EIGRP"], correctAnswer: 2 },
+                    { question: "¿Qué métrica usa RIP para elegir la mejor ruta?", options: ["Ancho de banda", "Retardo", "Conteo de saltos", "Costo monetario"], correctAnswer: 2 }
                 ]
             });
             setShowGenericQuiz(true);
         }
-        else {
-            // Default generic quiz for upper levels
+
+        // Module 3: Seguridad
+        else if (lvlId === 9) {
+            setExplanationLevel(9); // Security Threats Explanation
+            setShowExplanation(true);
+        }
+        else if (lvlId === 10) {
+            setMatchingProps({
+                title: "Seguridad WiFi",
+                pairs: [
+                    { id: '1', left: 'WEP', right: 'Obsoleto y fácil de hackear' },
+                    { id: '2', left: 'WPA2', right: 'Estándar actual seguro (AES)' },
+                    { id: '3', left: 'SSID', right: 'Nombre visible de la red' },
+                    { id: '4', left: 'WPA3', right: 'Nuevo estándar con mayor protección' }
+                ]
+            });
+            setShowMatchingGame(true);
+        }
+        else if (lvlId === 11) {
             setQuizProps({
-                title: `Evaluación Nivel ${lvlId}`,
+                title: "Firewalls y Defensa",
                 questions: [
-                    { question: "¿Estás listo para avanzar al siguiente nivel?", options: ["Sí, estoy listo", "Necesito repasar"], correctAnswer: 0 }
+                    { question: "¿Qué hace principalmente un Firewall?", options: ["Acelera el internet", "Filtra tráfico según reglas", "Elimina virus del disco", "Genera correos spam"], correctAnswer: 1 },
+                    { question: "¿Qué puerto se suele bloquear para evitar acceso web no seguro?", options: ["80 (HTTP)", "443 (HTTPS)", "25 (SMTP)", "53 (DNS)"], correctAnswer: 0 },
+                    { question: "¿Qué es una DMZ en una red?", options: ["Zona Desmilitarizada (pública)", "Zona de Máxima Seguridad", "Zona de Mantenimiento", "Zona muerta"], correctAnswer: 0 }
                 ]
             });
             setShowGenericQuiz(true);
+        }
+        else if (lvlId === 12) {
+            setQuizProps({
+                title: "Vulnerabilidades",
+                questions: [
+                    { question: "¿Qué es un ataque de Phishing?", options: ["Pescar en línea", "Infectar con USB", "Engañar por correo para robar datos", "Apagar un servidor"], correctAnswer: 2 },
+                    { question: "¿Qué es un ataque DDoS?", options: ["Robo de base de datos", "Denegación de servicio distribuida", "Descarga de datos oscuros", "Doble dominio seguro"], correctAnswer: 1 },
+                    { question: "¿Qué es 'Ingeniería Social'?", options: ["Programar en grupo", "Manipular personas para obtener acceso", "Diseñar redes sociales", "Configurar routers"], correctAnswer: 1 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+
+        // Module 4: Evaluación
+        else if (lvlId === 13) {
+            setQuizProps({
+                title: "Maestro de Redes: Fase 1",
+                questions: [
+                    { question: "¿Qué capa del modelo OSI maneja el direccionamiento físico (MAC)?", options: ["Red", "Enlace de Datos", "Física", "Transporte"], correctAnswer: 1 },
+                    { question: "¿Cuál es una dirección IP privada de clase C?", options: ["192.168.1.5", "8.8.8.8", "10.0.0.1", "172.16.0.1"], correctAnswer: 0 },
+                    { question: "¿TCP es orientado a conexión o sin conexión?", options: ["Sin conexión (rápido)", "Orientado a conexión (fiable)", "Ninguna", "Ambas"], correctAnswer: 1 },
+                    { question: "¿Qué dispositivo separa dominios de broadcast?", options: ["Hub", "Switch", "Router", "Repetidor"], correctAnswer: 2 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+        else if (lvlId === 14) {
+            setQuizProps({
+                title: "Misiones Tácticas",
+                questions: [
+                    { question: "MISIÓN: Un usuario se queja de que no puede salir a internet, pero sí ve la impresora local. ¿El problema probable es?", options: ["El cable de red", "La Puerta de Enlace (Gateway)", "El Switch", "El Driver de video"], correctAnswer: 1 },
+                    { question: "MISIÓN: Debes conectar dos edificios a 500 metros. ¿Qué medio usas?", options: ["Cable UTP Cat5", "Fibra Óptica", "Cable Coaxial", "Bluetooth"], correctAnswer: 1 },
+                    { question: "MISIÓN: Detectas tráfico inusual en el puerto 23 (Telnet). ¿Qué haces?", options: ["Nada, es seguro", "Lo bloqueas y usas SSH", "Abres más puertos", "Reinicias el servidor"], correctAnswer: 1 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+        else if (lvlId === 15) {
+            setQuizProps({
+                title: "Desafío Final",
+                questions: [
+                    { question: "¿Qué comando usas para ver la ruta que toman los paquetes?", options: ["ping", "ipconfig", "tracert / traceroute", "netstat"], correctAnswer: 2 },
+                    { question: "Si usas máscara 255.255.255.0 (/24), ¿cuántos hosts usables tienes?", options: ["256", "254", "255", "512"], correctAnswer: 1 },
+                    { question: "¿Qué es la Latencia?", options: ["Ancho de banda total", "Pérdida de paquetes", "Tiempo que tarda un paquete en llegar", "Número de saltos"], correctAnswer: 2 },
+                    { question: "¿Qué protocolo asegura la navegación web?", options: ["HTTP", "SSL/TLS (HTTPS)", "FTP", "TFTP"], correctAnswer: 1 },
+                    { question: "¿El 'Handshake' de 3 vías pertenece a...?", options: ["UDP", "ICMP", "TCP", "IP"], correctAnswer: 2 }
+                ]
+            });
+            setShowGenericQuiz(true);
+        }
+        else if (lvlId === 16) {
+            setExplanationLevel(16); // Graduation Celebration
+            setShowExplanation(true);
         }
     };
 
