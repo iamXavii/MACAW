@@ -34,6 +34,7 @@ import ProtocolSorter from './ProtocolSorter'; // Import Minigame
 // If missing, the build will fail. I will create a placeholder for you.
 import introVideo from '../../assets/intro_level1.mp4';
 import worldBg from '../../assets/world_bg.png'; // New background
+import world2Bg from '../../assets/world_2_bg.jpg'; // World 2 background
 
 const LevelMap = () => {
     // Get user from context
@@ -473,45 +474,68 @@ const LevelMap = () => {
                 />
             )}
 
-            <div className="w-full max-w-md relative z-10 flex flex-col gap-8 pb-32 mt-10">
-                {levels.map((level, index) => {
-                    // Calculate offset for winding path
-                    // Standard sine wave pattern for vertical scrolling path
-                    const offset = Math.sin(index * 0.8) * 60 * pathScale;
-                    const isSelected = selectedLevel === level.id;
+            {/* Modular Level Layout */}
+            <div className="w-full flex flex-col relative z-10 pb-32">
+                {/* Divide levels into 4 worlds (4 levels each) */}
+                {[0, 1, 2, 3].map((worldIndex) => {
+                    const worldLevels = levels.slice(worldIndex * 4, (worldIndex + 1) * 4);
+                    // Add backgrounds for specific worlds
+                    const worldBackground = worldIndex === 1 ? world2Bg : null;
 
                     return (
                         <div
-                            key={level.id}
-                            className={`flex justify-center relative ${isSelected ? 'z-50' : 'z-0'}`}
-                            style={{ transform: `translateX(${offset}px)` }}
-                            onClick={(e) => e.stopPropagation()} // Prevent background click from closing
+                            key={worldIndex}
+                            className="w-full relative flex flex-col items-center gap-8 py-16"
+                            style={{
+                                backgroundImage: worldBackground ? `url(${worldBackground})` : 'none',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center'
+                            }}
                         >
-                            {/* Popup for selected level */}
-                            {isSelected && (
-                                <LevelPopup
-                                    sectionTitle={levelData[level.id]?.section || "Sección"}
-                                    levelTitle={levelData[level.id]?.title || `Nivel ${level.id}`}
-                                    color={levelData[level.id]?.color}
-                                    onStart={handleStartLevel}
-                                    onClose={() => setSelectedLevel(null)}
-                                />
-                            )}
+                            {/* Optional: Add a subtle separator or transition if needed */}
 
-                            <LevelNode
-                                level={level.id}
-                                status={level.status}
-                                isCurrent={level.status === 'active'}
-                                customIcon={customIcons[level.id]}
-                                onClick={() => handleLevelClick(level.id)}
-                            />
+                            {worldLevels.map((level, i) => {
+                                // Calculate offset to maintain the continuous sine wave feel
+                                // Global index is needed for the math to stay consistent
+                                const globalIndex = (worldIndex * 4) + i;
+                                const offset = Math.sin(globalIndex * 0.8) * 60 * pathScale;
+                                const isSelected = selectedLevel === level.id;
 
-                            {/* Mac Character sitting on the active level or selected level */}
-                            {macPosition === level.id && (
-                                <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 pointer-events-none transition-all duration-500 ease-in-out">
-                                    <MacCharacter />
-                                </div>
-                            )}
+                                return (
+                                    <div
+                                        key={level.id}
+                                        className={`flex justify-center relative ${isSelected ? 'z-50' : 'z-0'}`}
+                                        style={{ transform: `translateX(${offset}px)` }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {/* Popup */}
+                                        {isSelected && (
+                                            <LevelPopup
+                                                sectionTitle={levelData[level.id]?.section || "Sección"}
+                                                levelTitle={levelData[level.id]?.title || `Nivel ${level.id}`}
+                                                color={levelData[level.id]?.color}
+                                                onStart={handleStartLevel}
+                                                onClose={() => setSelectedLevel(null)}
+                                            />
+                                        )}
+
+                                        <LevelNode
+                                            level={level.id}
+                                            status={level.status}
+                                            isCurrent={level.status === 'active'}
+                                            customIcon={customIcons[level.id]}
+                                            onClick={() => handleLevelClick(level.id)}
+                                        />
+
+                                        {/* Mac Character */}
+                                        {macPosition === level.id && (
+                                            <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 pointer-events-none transition-all duration-500 ease-in-out">
+                                                <MacCharacter />
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
                     );
                 })}
