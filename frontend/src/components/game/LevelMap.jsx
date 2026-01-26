@@ -35,6 +35,7 @@ import ProtocolSorter from './ProtocolSorter'; // Import Minigame
 import introVideo from '../../assets/intro_level1.mp4';
 import worldBg from '../../assets/world_bg.png'; // New background
 import world2Bg from '../../assets/world_2_bg.jpg'; // World 2 background
+import world3Bg from '../../assets/world_3_bg.jpg'; // World 3 background
 
 const LevelMap = () => {
     // Get user from context
@@ -491,6 +492,9 @@ const LevelMap = () => {
                     }
                     else if (worldIndex === 1) {
                         worldBackground = world2Bg;
+                    }
+                    else if (worldIndex === 2) {
+                        worldBackground = world3Bg;
                     }
 
                     return (
