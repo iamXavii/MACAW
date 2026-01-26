@@ -20,6 +20,10 @@ import level5Icon from '../../assets/level_5.png';
 import level6Icon from '../../assets/level_6.png';
 import level7Icon from '../../assets/level_7.png';
 import level8Icon from '../../assets/level_8.png';
+import level9Icon from '../../assets/level_9.png';
+import level10Icon from '../../assets/level_10.png';
+import level11Icon from '../../assets/level_11.png';
+import level12Icon from '../../assets/level_12.png';
 import ProtocolSorter from './ProtocolSorter'; // Import Minigame
 
 // Import video - Ensure this file exists in your assets folder!
@@ -57,7 +61,11 @@ const LevelMap = () => {
         5: level5Icon,
         6: level6Icon,
         7: level7Icon,
-        8: level8Icon
+        8: level8Icon,
+        9: level9Icon,
+        10: level10Icon,
+        11: level11Icon,
+        12: level12Icon
     };
 
     // Level Metadata (16 Levels)
