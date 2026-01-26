@@ -399,9 +399,8 @@ const LevelMap = () => {
 
     return (
         <div
-            className="relative min-h-screen bg-cover bg-center flex flex-col items-center py-20 overflow-hidden"
+            className="relative min-h-screen bg-gray-900 bg-cover bg-center flex flex-col items-center py-20 overflow-x-hidden"
             onClick={() => setSelectedLevel(null)}
-            style={{ backgroundImage: `url(${worldBg})` }}
         >
             {/* Background elements (clouds, etc could go here) */}
             <div className="absolute inset-0 bg-white/40 z-0 pointer-events-none" />
@@ -479,8 +478,11 @@ const LevelMap = () => {
                 {/* Divide levels into 4 worlds (4 levels each) */}
                 {[0, 1, 2, 3].map((worldIndex) => {
                     const worldLevels = levels.slice(worldIndex * 4, (worldIndex + 1) * 4);
-                    // Add backgrounds for specific worlds
-                    const worldBackground = worldIndex === 1 ? world2Bg : null;
+
+                    // Define backgrounds per world
+                    let worldBackground = null;
+                    if (worldIndex === 0) worldBackground = worldBg;
+                    else if (worldIndex === 1) worldBackground = world2Bg;
 
                     return (
                         <div
