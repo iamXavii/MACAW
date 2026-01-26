@@ -482,10 +482,12 @@ const LevelMap = () => {
                     // Define backgrounds per world
                     let worldBackground = null;
                     let bgPosition = 'center';
+                    let bgColor = 'transparent'; // Default transparent
 
                     if (worldIndex === 0) {
                         worldBackground = worldBg;
                         bgPosition = 'center 250px'; // Shift down significantly to show sun below header
+                        bgColor = '#87CEEB'; // Sky blue to fill the top gap
                     }
                     else if (worldIndex === 1) {
                         worldBackground = world2Bg;
@@ -498,7 +500,9 @@ const LevelMap = () => {
                             style={{
                                 backgroundImage: worldBackground ? `url(${worldBackground})` : 'none',
                                 backgroundSize: 'cover',
-                                backgroundPosition: bgPosition
+                                backgroundPosition: bgPosition,
+                                backgroundRepeat: 'no-repeat',
+                                backgroundColor: bgColor
                             }}
                         >
                             {/* Optional: Add a subtle separator or transition if needed */}
