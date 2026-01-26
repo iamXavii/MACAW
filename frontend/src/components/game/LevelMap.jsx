@@ -481,8 +481,15 @@ const LevelMap = () => {
 
                     // Define backgrounds per world
                     let worldBackground = null;
-                    if (worldIndex === 0) worldBackground = worldBg;
-                    else if (worldIndex === 1) worldBackground = world2Bg;
+                    let bgPosition = 'center';
+
+                    if (worldIndex === 0) {
+                        worldBackground = worldBg;
+                        bgPosition = 'center 100px'; // Shift down a bit
+                    }
+                    else if (worldIndex === 1) {
+                        worldBackground = world2Bg;
+                    }
 
                     return (
                         <div
@@ -491,7 +498,7 @@ const LevelMap = () => {
                             style={{
                                 backgroundImage: worldBackground ? `url(${worldBackground})` : 'none',
                                 backgroundSize: 'cover',
-                                backgroundPosition: 'center'
+                                backgroundPosition: bgPosition
                             }}
                         >
                             {/* Optional: Add a subtle separator or transition if needed */}
