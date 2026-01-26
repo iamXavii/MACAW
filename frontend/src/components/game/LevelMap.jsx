@@ -33,10 +33,8 @@ import ProtocolSorter from './ProtocolSorter'; // Import Minigame
 // Import video - Ensure this file exists in your assets folder!
 // If missing, the build will fail. I will create a placeholder for you.
 import introVideo from '../../assets/intro_level1.mp4';
-import worldBg from '../../assets/world_bg.png'; // New background
-import world2Bg from '../../assets/world_2_bg.jpg'; // World 2 background
-import world3Bg from '../../assets/world_3_bg.jpg'; // World 3 background
-import world4Bg from '../../assets/world_4_bg.jpg'; // World 4 background
+import introVideo from '../../assets/intro_level1.mp4';
+import fullWorldBg from '../../assets/full_world_bg.png'; // Unified background
 
 const LevelMap = () => {
     // Get user from context
@@ -401,8 +399,9 @@ const LevelMap = () => {
 
     return (
         <div
-            className="relative min-h-screen bg-gray-900 bg-cover bg-center flex flex-col items-center py-20 overflow-x-hidden"
+            className="relative min-h-screen bg-cover bg-top flex flex-col items-center py-20 overflow-x-hidden"
             onClick={() => setSelectedLevel(null)}
+            style={{ backgroundImage: `url(${fullWorldBg})`, backgroundSize: '100% auto' }} // Fit width, scroll height
         >
             {/* Background elements (clouds, etc could go here) */}
             <div className="absolute inset-0 bg-white/40 z-0 pointer-events-none" />
