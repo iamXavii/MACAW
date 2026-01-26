@@ -36,6 +36,7 @@ import introVideo from '../../assets/intro_level1.mp4';
 import worldBg from '../../assets/world_bg.png'; // New background
 import world2Bg from '../../assets/world_2_bg.jpg'; // World 2 background
 import world3Bg from '../../assets/world_3_bg.jpg'; // World 3 background
+import world4Bg from '../../assets/world_4_bg.jpg'; // World 4 background
 
 const LevelMap = () => {
     // Get user from context
@@ -495,6 +496,9 @@ const LevelMap = () => {
                     }
                     else if (worldIndex === 2) {
                         worldBackground = world3Bg;
+                    }
+                    else if (worldIndex === 3) {
+                        worldBackground = world4Bg;
                     }
 
                     return (
