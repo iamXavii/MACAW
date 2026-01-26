@@ -485,7 +485,7 @@ const LevelMap = () => {
 
                     if (worldIndex === 0) {
                         worldBackground = worldBg;
-                        bgPosition = 'center 100px'; // Shift down a bit
+                        bgPosition = 'center 250px'; // Shift down significantly to show sun below header
                     }
                     else if (worldIndex === 1) {
                         worldBackground = world2Bg;
