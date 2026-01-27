@@ -33,7 +33,7 @@ import ProtocolSorter from './ProtocolSorter'; // Import Minigame
 // Import video - Ensure this file exists in your assets folder!
 // If missing, the build will fail. I will create a placeholder for you.
 import introVideo from '../../assets/intro_level1.mp4';
-import customGameBg from '../../assets/custom_level_bg.png'; // Generated background
+import customGameBg from '../../assets/bg_network_final.png'; // Renamed to bust cache
 
 const LevelMap = () => {
     // Get user from context
